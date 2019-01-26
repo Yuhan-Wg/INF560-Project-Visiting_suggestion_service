@@ -1,0 +1,7 @@
+#Input files
+input/*.csv
+
+#notebooks
+src/*.ipynb
+
+
