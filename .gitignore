@@ -2,6 +2,7 @@
 input/*.csv
 
 #notebooks
-src/*.ipynb
+src/**/*.ipynb
 
-
+#coala configuration
+.coafile
