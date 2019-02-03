@@ -1,5 +1,7 @@
 #Input files
 input/*.csv
+src/*.csv
+*.csv
 
 #notebooks
 src/**/*.ipynb
