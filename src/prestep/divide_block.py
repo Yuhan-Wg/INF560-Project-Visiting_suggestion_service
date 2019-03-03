@@ -16,7 +16,7 @@ Total process costs 20mins on my PC.
 """
 
 
-def mapFloor5(df,blockNum={'lng':50,'lat':50}):
+def mapFloor5(df,blockNum={'lng':15,'lat':15}):
     mask=(df.Level==5)
     #df.loc[mask,'lngBlock']=np.round(df.loc[mask].lng,6).map(MAPPER).astype('int8')
     MinMaxMapper={

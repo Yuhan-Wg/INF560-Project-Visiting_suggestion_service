@@ -14,8 +14,8 @@ Total process costs 5mins on my PC.
 
 """
 
-def assignBlock(df):
-    df['quarter'] = (df.minute//15).astype("int8")
+def assignBlock(df,timeBlockSize=15):
+    df['quarter'] = (df.minute//timeBlockSize).astype("int8")
     group = df.groupby(by=['Level','latBlock','lngBlock','month','day','hour','quarter']).size().reset_index(name='count')
     return group
 
