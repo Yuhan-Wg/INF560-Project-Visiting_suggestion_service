@@ -2,6 +2,7 @@
 input/*.csv
 src/*.csv
 *.csv
+!debugger.csv
 
 #notebooks
 src/**/*.ipynb

@@ -18,6 +18,7 @@ Total process costs 20mins on my PC.
 
 def mapFloor5(df,blockNum={'lng':15,'lat':15}):
     mask=(df.Level==5)
+    if mask.sum()==0: return df
     #df.loc[mask,'lngBlock']=np.round(df.loc[mask].lng,6).map(MAPPER).astype('int8')
     MinMaxMapper={
     'lat':[1.29027486,1.29086614],
@@ -34,52 +35,64 @@ def mapFloor5(df,blockNum={'lng':15,'lat':15}):
         df.loc[mask,f+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
     return df
 
-def mapFloor1(df,blockNum={'transformedLng':50,'transformedLat':50}):
+def mapFloor1(df,blockNum={'lng':50,'lat':50}):
     mask=(df.Level==1)
-    lngMax = 0.0013678100000049653 #df.loc[mask].lng.max()-df.loc[mask].lng.min()
-    latMax = 0.0015226099999998688 #df.loc[mask].lat.max()-df.loc[mask].lat.min()
+    if mask.sum()==0: return df
+    lngRange = 0.0013678100000049653 #df.loc[mask].lng.max()-df.loc[mask].lng.min()
+    latRange = 0.0015226099999998688 #df.loc[mask].lat.max()-df.loc[mask].lat.min()
+    tanTheta = latRange/lngRange
+    cosTheta = 1 / np.sqrt(1 + tanTheta ** 2)
+    sinTheta = tanTheta * cosTheta
     lngMin = 103.850815 #df.loc[mask].lng.min()
     latMin = 1.28961633 #df.loc[mask].lat.min()
-    df.loc[mask,'transformedLng'] = df.loc[mask,'lng']-lngMin
-    df.loc[mask,'transformedLat'] = df.loc[mask,'lat'] - latMin -latMax/lngMax * df.loc[mask,'transformedLng']
+
+    df.loc[mask,'lng'] = df.loc[mask,'lng']-lngMin
+    df.loc[mask,'lat'] = df.loc[mask,'lat']-latMin# -latMax/lngMax * df.loc[mask,'transformedLng']
+    df.loc[mask,'lng'], df.loc[mask,'lat']=(df.loc[mask,'lng'] * cosTheta + df.loc[mask,'lat'] * sinTheta,
+    df.loc[mask,'lat'] * cosTheta - df.loc[mask,'lng'] * sinTheta)
 
     transformedMinMaxMapper={
-    'transformedLng':[0.0,0.0013678100000049653],
-    'transformedLat':[-0.0004549742729702752,0.0003869574631660687]
+    'lng':[3.9249962565910825e-05, 0.0019649157513331296],
+    'lat':[-0.0003040497936802123, 0.0002585955818349057]
     }
 
-    for f in ['transformedLng','transformedLat']:
+    for f in ['lng','lat']:
         fMin=transformedMinMaxMapper[f][0] #df.loc[mask,f].min()
         fMax=transformedMinMaxMapper[f][1] #df.loc[mask,f].max()
-        edge=np.round((fMax-fMin)*1/blockNum[f]/2,7)
+        edge=np.round((fMax-fMin)*1/blockNum[f]/10,8)
         fMin-=edge
         fMax+=edge
-        df.loc[mask,f[-3:].lower()+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
-        del df[f]
+        df.loc[mask,f+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
     return df
 
-def mapFloorB1(df,blockNum={'transformedLng':50,'transformedLat':50}):
+def mapFloorB1(df,blockNum={'lng':50,'lat':50}):
     mask=(df.Level==0)
-    lngMax = 0.0007586800000041194 #df.loc[mask].lng.max()-df.loc[mask].lng.min()
-    latMax = 0.001228809999999969 #df.loc[mask].lat.max()-df.loc[mask].lat.min()
+    if mask.sum()==0: return df
+    lngRange = 0.0007586800000041194 #df.loc[mask].lng.max()-df.loc[mask].lng.min()
+    latRange = 0.001228809999999969 #df.loc[mask].lat.max()-df.loc[mask].lat.min()
+    tanTheta = latRange/lngRange
+    cosTheta = 1 / np.sqrt(1 + tanTheta ** 2)
+    sinTheta = tanTheta * cosTheta
     lngMin = 103.85125389 # df.loc[mask].lng.min()
     latMin = 1.28970571 #df.loc[mask].lat.min()
-    df.loc[mask,'transformedLng'] = df.loc[mask,'lng']- lngMin
-    df.loc[mask,'transformedLat'] = df.loc[mask,'lat']-latMin-latMax/lngMax * df.loc[mask,'transformedLng']
+
+    df.loc[mask,'lng'] = df.loc[mask,'lng']-lngMin
+    df.loc[mask,'lat'] = df.loc[mask,'lat']-latMin# -latMax/lngMax * df.loc[mask,'transformedLng']
+    df.loc[mask,'lng'], df.loc[mask,'lat']=(df.loc[mask,'lng'] * cosTheta + df.loc[mask,'lat'] * sinTheta,
+    df.loc[mask,'lat'] * cosTheta - df.loc[mask,'lng'] * sinTheta)
 
     transformedMinMaxMapper={
-    'transformedLng':[0.0,0.0007586800000041194],
-    'transformedLat':[-0.0004127313021250311,0.0004330021423923565]
+    'lng':[0.0,0.001426456854579402],
+    'lat':[-0.00021682718144778434,0.00022747640804657266]
     }
 
-    for f in ['transformedLng','transformedLat']:
+    for f in ['lng','lat']:
         fMin=transformedMinMaxMapper[f][0] #df.loc[mask,f].min()
         fMax=transformedMinMaxMapper[f][1] #df.loc[mask,f].max()
-        edge=np.round((fMax-fMin)*1/blockNum[f]/2,7)
+        edge=np.round((fMax-fMin)*1/blockNum[f]/10,8)
         fMin-=edge
         fMax+=edge
-        df.loc[mask,f[-3:].lower()+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
-        del df[f]
+        df.loc[mask,f+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
     return df
 
 def mapFloorAll(df,blockNum={'lng':50,'lat':50}):
@@ -104,6 +117,9 @@ def divideBlock(chunk):
     chunk=mapFloor5(chunk)
     chunk=mapFloor1(chunk)
     chunk=mapFloorB1(chunk)
+
+
+    del chunk['lng'],chunk['lat']
 
     chunk['month'] = chunk.localtime.dt.month.astype("int8")
     chunk['day'] = chunk.localtime.dt.day.astype("int8")
