@@ -3,6 +3,7 @@ input/*.csv
 src/*.csv
 *.csv
 !debugger.csv
+!input/debugger_origin.csv
 
 #notebooks
 src/**/*.ipynb
