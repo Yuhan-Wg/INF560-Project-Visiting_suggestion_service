@@ -151,6 +151,5 @@ def main(argv):
         print("Finish:"+(i+1)*'>'+(chunk_num-i)*'-'+' %02d'%(100*(i+1)/chunk_num),end='\r')
     print("-----------Complete---------------")
 
-
 if __name__=='__main__':
     main(sys.argv)
