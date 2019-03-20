@@ -16,7 +16,8 @@ Total process costs 5mins on my PC.
 
 def assignBlock(df,timeBlockSize=15):
     df['quarter'] = (df.minute//timeBlockSize).astype("int8")
-    group = df.groupby(by=['Level','latBlock','lngBlock','month','day','hour','quarter']).agg({"ClientMacAddr":"nuqiue"}).reset_index(name='count')
+    group = df.groupby(by=['Level','latBlock','lngBlock','month','day','hour','quarter']).\
+    		agg({"ClientMacAddr":"nunique"}).rename(columns={"ClientMacAddr":"count"}).reset_index()
     return group
 
 def main(argv):
