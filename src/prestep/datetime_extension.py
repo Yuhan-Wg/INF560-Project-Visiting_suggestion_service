@@ -8,9 +8,14 @@ cols=['Daily Rainfall Total (mm)', 'Highest 30 Min Rainfall (mm)',
        'Minimum Temperature (∞C)', 'Mean Wind Speed (km/h)',
        'Max Wind Speed (km/h)','Year', 'Month', 'Day']
 
-def timedate_process(df,weatherFilePath = "../../input/weather/"):
-    # Load weather data
+def timedate_process(df):
+    # Find the input dir
     weatherData = pd.DataFrame()
+    for p in ["./","../","../../","../../../"]:
+        if "input" in os.listdir(p):
+            weatherFilePath = p+ "input/weather/"
+            break
+    # Load weather data
     for file in os.listdir(weatherFilePath):
         temp = pd.read_csv(weatherFilePath+file,encoding ='mac_roman',usecols=cols)
         weatherData = pd.concat([temp, weatherData], axis=0).replace("ó",np.nan).astype(float)

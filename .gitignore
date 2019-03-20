@@ -4,6 +4,7 @@ src/*.csv
 *.csv
 !debugger.csv
 !input/debugger_origin.csv
+!input/weather/*.csv
 
 #notebooks
 src/**/*.ipynb
