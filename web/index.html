@@ -1,0 +1,210 @@
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="stylea9.css">
+
+<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3-queue.v3.min.js"></script>
+<script src="https://d3js.org/d3-array.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo.v1.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://d3js.org/d3-color.v1.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+</head>
+<style>
+
+        .land {
+          fill: white;
+        }
+
+        .border {
+          fill: none;
+          stroke: #fff;
+          stroke-linejoin: round;
+          stroke-linecap: round;
+        }
+
+        .bubble {
+          fill: brown;
+          fill-opacity: 0.8;
+          stroke: #fff;
+          stroke-width: 1px;
+        }
+        .bubble :hover {
+  stroke: #000;
+}
+
+
+
+        .legend circle {
+          fill: none;
+          stroke: #ccc;
+        }
+
+        .legend text {
+          fill: #777;
+          font: 10px sans-serif;
+          text-anchor: middle;
+        }
+
+        </style>
+<body>
+
+
+
+
+    <svg id = "heat" version="1.1"    width="1500" height="800"
+
+
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+       <image xlink:href="floor b1.png" width="1500" height="800"/>
+
+
+</svg>
+
+
+
+
+
+
+
+
+<h2>。</h2>
+<h2>。</h2>
+<h2>。</h2>
+<h2>。</h2>
+
+
+<svg id = "chart3" width="600" height="600" style="margin:20 500 ;background-color: #eee"></svg>
+<script type="text/javascript">
+
+/*
+function skyscale(x, y) {
+    if(y>50){console.log("!!!!!!!!")}
+    var scalex = d3.scaleLinear();
+		scalex.domain([0,50])
+		     .range([190,1390]);
+    var newx = scalex(x);
+
+    var scaley = d3.scaleLinear();
+		scaley.domain([0,50])
+		     .range([200,590]);
+    var newy = scaley(y);
+    //console.log(x)
+    return [newx, newy];
+}
+*/
+/*
+function color(count){
+    //console.log(count)
+    var res = d3.scaleLinear()
+  .domain([d3.min(blockdata.count), d3.max(blockdata.count)])
+  .range(['rgb(255, 245, 235)', 'rgb(127, 39, 4)']);
+    console.log(res(count))
+    return res(count);
+}
+*/
+
+var svg = d3.select("#heat"),
+  width = +svg.attr("width"),
+  height = +svg.attr("height");
+
+  /*
+  svg.append("rect")
+        .attr("width","10")
+        .attr("height","10")
+        .attr("x","1390")
+        .attr("y","590")
+        .attr("fill","red")
+    */
+
+d3.csv("data.csv"
+, function (d) {  //d contains datum of current row
+    if(d.Level == 0 && d.month==4
+    && d.day == 25 &&d.hour == 11 && d.quarter==0)
+    {
+        return  d ;
+    }
+}).then(function(blockdata){
+
+var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
+var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
+var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
+var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
+var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
+var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
+console.log(minCount,maxCount,minX,maxX,minY,maxY)
+
+function skyscale(x, y,minX,maxX,minY,maxY) {
+    if(y>50){console.log("!!!!!!!!")}
+    var scalex = d3.scaleLinear();
+		scalex.domain([0,50])
+		     .range([360,1350]);
+    var newx = scalex(x);
+
+    var scaley = d3.scaleLinear();
+		scaley.domain([0,30])
+		     .range([580,400]);
+    var newy = scaley(y);
+    //console.log(x, y,minX,maxX,minY,maxY)
+    return [newx, newy];
+}
+
+
+var res = d3.scaleLinear()
+  .domain([minCount,120])
+  .range(['#EFECEC','#CE0000']);
+
+
+    //console.log(blockdata)
+    svg.append("g")
+        .attr("class","blocks")
+        .selectAll("rect")
+        .data(blockdata)
+        .enter()
+        .append("rect")
+        .attr("width","24")
+        .attr("height","7")
+        .attr("x",function(d)
+        {   //console.log(d)
+            //console.log(d.latBlock)
+           // console.log(laProjection(d.geometry.coordinates))
+            return skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+        })
+        .attr("y",function(d)
+        {
+           // console.log(laProjection(d.geometry.coordinates))
+           return skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1];
+        })
+        .attr("fill",function(d)
+        {
+           // console.log(laProjection(d.geometry.coordinates))
+           return res(d.count);
+        })
+
+})
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+
+
+</html>
