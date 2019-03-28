@@ -1,4 +1,4 @@
-# Preprocess Data
+# Preprocess
 Download data provided by Kiana.
 
 **Run Scripts:**
@@ -7,19 +7,17 @@ Download data provided by Kiana.
 
 **Debugger Dataset:**
 
-*input/debugger_origin.csv* file is small subset from origin dataset. It is used for testing the execution of our preprocessing programs.
+*input/debugger_origin.csv* file is small subset from origin dataset (random sampling). It is used for testing the execution of our preprocessing programs.
 
-*input/debugger.csv* file is a small dataset used to debug programs and test website interface. It should not be regarded as formally implemented data.
-
-*input/debugger.csv* contains counts of records in each block.
+*input/debugger.csv* file is a small dataset used to debug programs and test website interface. It should not be regarded as formally implemented data. It contains counts of records in each block.
 * Time period is in: **10:00 to 14:45** *and* **April 25 to April 30th**.
 * Cols: Level, latBlock, lngBlock, month, day, hour, quarter, count
 
 *input/weather* contains weather data scraped from internet
 
-**Overview:**
+**Overview of Functions:**
 
-A quick overview of preprocessing program is in *Overview.ipynb* which runs on debugger dataset.
+A quick overview of preprocessing program is in *[Quick_Overview.ipynb](./Quick_Overview.ipynb)* which runs on debugger dataset.
 
 # Support
 INF-560 (Data Informatics Professional Practicum) Project sponsored by Kiana Analytics, Inc.
