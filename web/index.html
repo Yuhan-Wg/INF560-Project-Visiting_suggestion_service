@@ -1,63 +1,71 @@
 <html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="stylea9.css">
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="./date-picker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 
 <script src="https://d3js.org/d3.v5.js"></script>
 <script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script src="https://d3js.org/d3-array.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo.v1.min.js"></script>
 
+<script type="text/javascript" src="./jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./date-picker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./date-picker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script> 
 
 
+<!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
+
 <script src="https://d3js.org/d3-color.v1.min.js"></script>
 <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+
       
 </head>
-<style>
 
-        .land {
-          fill: white;
-        }
-        
-        .border {
-          fill: none;
-          stroke: #fff;
-          stroke-linejoin: round;
-          stroke-linecap: round;
-        }
-        
-        .bubble {
-          fill: brown;
-          fill-opacity: 0.8;
-          stroke: #fff;
-          stroke-width: 1px;
-        }
-        .bubble :hover {
-  stroke: #000;
-}
-
-        
-        
-        .legend circle {
-          fill: none;
-          stroke: #ccc;
-        }
-        
-        .legend text {
-          fill: #777;
-          font: 10px sans-serif;
-          text-anchor: middle;
-        }
-        
-        </style>
 <body>
-
-    
+<!-- Add a date time & picker using Bootstrap -->
+  <div class="container">
+    <form action="" class="form-horizontal"  role="form">
+        <fieldset>
+            <legend>Choose Date and Time</legend>
+            <div class="form-group">
+                <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
+                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input1" value="" /><br/>
+            </div>
+			<div class="form-group">
+                <label for="dtp_input2" class="col-md-2 control-label">Date Picking</label>
+                <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input2" value="" /><br/>
+            </div>
+			<div class="form-group">
+                <label for="dtp_input3" class="col-md-2 control-label">Time Picking</label>
+                <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input3" value="" /><br/>
+            </div>
+        </fieldset>
+    </form>
+</div>    
 
 
     <svg id = "heat" version="1.1"    width="1500" height="800"
@@ -71,22 +79,10 @@
 
 </svg>
       
-      
     
-
-
-
-
-
-<h2>。</h2>
-<h2>。</h2>
-<h2>。</h2>
-<h2>。</h2>
-
-
-<svg id = "chart3" width="600" height="600" style="margin:20 500 ;background-color: #eee"></svg>
+    
 <script type="text/javascript">
-
+ 
 /*
 function skyscale(x, y) {
     if(y>50){console.log("!!!!!!!!")}
@@ -127,6 +123,7 @@ var svg = d3.select("#heat"),
         .attr("fill","red")
     */
 
+// Load data from data.csv to d3, implementing data join to draw the heatmap
 d3.csv("data.csv"
 , function (d) {  //d contains datum of current row
     if(d.Level == 0 && d.month==4
@@ -144,28 +141,32 @@ var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
 var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
 console.log(minCount,maxCount,minX,maxX,minY,maxY)
 
+// Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
 function skyscale(x, y,minX,maxX,minY,maxY) {
-    if(y>50){console.log("!!!!!!!!")}
+    if(y>39){console.log("!!!!!!!!")}
     var scalex = d3.scaleLinear();
 		scalex.domain([0,50])
 		     .range([190,1390]);				 
     var newx = scalex(x);
     
     var scaley = d3.scaleLinear();
-		scaley.domain([0,30])
+		scaley.domain([0,40])
 		     .range([200,590]);				 
     var newy = scaley(y);
     //console.log(x, y,minX,maxX,minY,maxY)
     return [newx, newy];
 }
 
-
+// Use scaleLinear to produce different color code
 var res = d3.scaleLinear()
   .domain([minCount,120])
   .range(['#EFECEC','#CE0000']);
 
 
     //console.log(blockdata)
+
+    
+// Draw the blocks on the floorplan
     svg.append("g")
         .attr("class","blocks")
         .selectAll("rect")
@@ -178,12 +179,14 @@ var res = d3.scaleLinear()
         {   //console.log(d)
             //console.log(d.latBlock)
            // console.log(laProjection(d.geometry.coordinates))
-            return skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+            return 190+1390-skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+            //return skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
         })
         .attr("y",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
-           return skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1];
+           //return (skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1]);
+           return (200+590-skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1]);
         })
         .attr("fill",function(d)
         {
@@ -194,8 +197,38 @@ var res = d3.scaleLinear()
 })
   
 
-
-
+// Here is the logic of time-picker
+$('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
 
 
 
