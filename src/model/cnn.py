@@ -4,6 +4,10 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 
+"""
+This part is not finished yet.
+The program can't run properly.
+"""
 
 def cnn_model(input,labels, **parameters):
   # Input Layer
@@ -15,6 +19,10 @@ def cnn_model(input,labels, **parameters):
 
   input_layer = tf.reshape(input, [-1, size[0], size[1], 1])
   label_layer = tf.reshape(labels, [-1, size[0], size[1], 1])
+
+   # We only add conv layers with 'same' padding in our model
+   # since It's a n*n -> n*n prediction (previous distribution -> future prediction)
+   # dimensions should be kept same
 
   # Convolutional Layer and Pooling Layer#1
   conv1 = tf.layers.conv2d(
@@ -46,8 +54,7 @@ def cnn_model(input,labels, **parameters):
   # Dense Layer
   conv3_flat = tf.reshape(conv3, [-1, size[0]*size[1]*filters[2]])
   dense = tf.layers.dense(inputs=conv3_flat, units=1024, activation=tf.nn.relu)
-  dropout = tf.layers.dropout(
-      inputs=dense, rate=0.4, training= True)
+  dropout = tf.layers.dropout(inputs=dense, rate=0.4, training= True)
 
   # Logits Layer
   logits = tf.layers.dense(inputs=dropout, units=10)
@@ -58,4 +65,4 @@ def cnn_model(input,labels, **parameters):
   # Train
   optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
   train_op = optimizer.minimize(loss=loss,global_step=tf.train.get_global_step())
-  return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
+  #return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
