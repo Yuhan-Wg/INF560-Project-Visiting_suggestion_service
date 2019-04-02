@@ -1,0 +1,4 @@
+[Spacing]
+files = src/**/*.py
+bears = SpaceConsistencyBear
+use_spaces = True

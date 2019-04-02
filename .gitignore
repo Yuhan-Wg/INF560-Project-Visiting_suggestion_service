@@ -5,11 +5,9 @@ src/*.csv
 !debugger.csv
 !input/debugger_origin.csv
 !input/weather/*.csv
+!web/data.csv
 
 #notebooks
 src/**/*.ipynb
 
 .DS_Store
-
-#coala configuration
-.coafile
