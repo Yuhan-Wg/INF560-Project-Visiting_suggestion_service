@@ -11,6 +11,3 @@ src/*.csv
 src/**/*.ipynb
 
 .DS_Store
-
-#coala configuration
-.coafile
