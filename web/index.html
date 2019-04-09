@@ -15,7 +15,7 @@
 <script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./date-picker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <!--
-<script type="text/javascript" src="./date-picker/js/locales/bootstrap-datetimepicker.us.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./date-picker/js/locales/bootstrap-datetimepicker.us.js" charset="UTF-8"></script> 
 -->
 
 <!--
@@ -33,7 +33,7 @@
         #heatmap  {
             width:600px; height:400px;border: 1px solid;border-color: grey;
         }
-    </style>
+    </style>      
 </head>
 
 <body>
@@ -73,50 +73,152 @@
                 </div>
 				<input type="hidden" id="dtp_input3" value="" /><br/>
             </div>
-            <button onclick="fun()" class="button button-action button-pill" id = "reset"  type="button">Apply</button>
+
+            <br>
+            
+            <div class="button-group">
+
+                  
+            <button onclick="floorb1()" class="button button-pill button-action" id = "fb1"  type="button">B1F</button>
+            <button onclick="floor1()" class="button button-pill button-action" id = "f1"  type="button">1F</button>
+            <button onclick="floor5()" class="button button-pill button-action" id = "f5"  type="button">5F</button>
+            </div>
+            <br>
+            <br>
+
+            <button onclick="fun()" class="button button-glow button-rounded button-caution" id = "reset"  type="button">Applied</button>
         </fieldset>
     </form>
-</div>
+</div>    
 
 
-    <svg id = "heat" version="1.1"    width="1500" height="800" viewBox="-100 180 1800 800"
-
+    <svg id = "heat" version="1.1"    width="1500" height="800" viewBox="-170 180 1800 800"
+     
 
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink">
-
+   
        <image xlink:href="floor b1.png" width="1500" height="800"/>
-
+    
 
     </svg>
-
-<div id="heatmap"></div>
-
+      
+<div id="heatmap"></div>   
+    
 <script type="text/javascript">
+
+var floor = 0;
+console.log(floor)
 function skyscale(x, y,minX,maxX,minY,maxY) {
     if(y>39){console.log("!!!!!!!!")}
     var scalex = d3.scaleLinear();
 		scalex.domain([0,50])
-		     .range([190,1390]);
+		     .range([190,1390]);				 
     var newx = scalex(x);
-
+    
     var scaley = d3.scaleLinear();
-		scaley.domain([0,43])
-		     .range([200,590]);
+		scaley.domain([0,50])
+		     .range([200,590]);				 
     var newy = scaley(y);
     //console.log(x, y,minX,maxX,minY,maxY)
     return [newx, newy];
 }
+
+function scale1(x, y,minX,maxX,minY,maxY) {
+    if(y>39){console.log("!!!!!!!!")}
+    var scalex = d3.scaleLinear();
+		scalex.domain([0,50])
+		     .range([165,1380]);				 
+    var newx = scalex(x);
+    
+    var scaley = d3.scaleLinear();
+		scaley.domain([0,50])
+		     .range([195,570]);				 
+    var newy = scaley(y);
+    //console.log(x, y,minX,maxX,minY,maxY)
+    return [newx, newy];
+}
+
+function scale5(x, y,minX,maxX,minY,maxY) {
+    if(y>39){console.log("!!!!!!!!")}
+    var scalex = d3.scaleLinear();
+		scalex.domain([0,50])
+		     .range([210,1450]);				 
+    var newx = scalex(x);
+    
+    var scaley = d3.scaleLinear();
+		scaley.domain([0,50])
+		     .range([200,570]);				 
+    var newy = scaley(y);
+    //console.log(x, y,minX,maxX,minY,maxY)
+    return [newx, newy];
+}
+
+function floorb1(){
+    d3.selectAll("image").remove()
+    d3.selectAll("g").remove()
+    g = d3.select("#heat")
+            .append("image")
+            .attr("xlink:href","floor b1.png")
+            .attr("width","1500")
+            .attr("height","800")
+
+    floor = 0
+    console.log(floor)
+
+}
+
+function floor1(){
+    d3.selectAll("image").remove()
+    d3.selectAll("g").remove()
+    g = d3.select("#heat")
+            .append("image")
+            .attr("xlink:href","floor 1.png")
+            .attr("width","1500")
+            .attr("height","800")
+
+    floor = 1
+    console.log(floor)
+    //console.log("$$$$$$$$$$$")
+    
+
+}
+
+function floor5(){
+    d3.selectAll("image").remove()
+    d3.selectAll("g").remove()
+    g = d3.select("#heat")
+            .append("image")
+            .attr("xlink:href","floor 5.png")
+            .attr("width","1500")
+            .attr("height","800")
+
+    floor = 5
+    console.log(floor)
+/*
+    d3.select("#heat")
+        .append("rect")
+        .attr("width","24")
+        .attr("height","7")
+        .attr("x","210")
+        .attr("y","570")
+        .attr("fill","black")
+*/
+}
+
 function fun(){
+
 d3.selectAll("g").remove()
 var x = document.getElementById("dtp_input2").value
 var y = document.getElementById("dtp_input3").value
-console.log(x)
+//console.log(x)
+
 var month = x.split("-")[1]
 if(month[0] == "0")
 {
     month = month[1]
 }
+
 var day = x.split("-")[2]
 var hour = y.split(":")[0]
 var minute = 0
@@ -136,22 +238,28 @@ else if( y.split(":")[1] == "45" || y.split(":")[1] == "50"|| y.split(":")[1] ==
 {
     minute = 3
 }
+
 var file = x+".csv"
-console.log(file)
-console.log(month)
-console.log(day)
-console.log(hour)
-console.log(minute)
+//console.log(file)
+
+//console.log(month)
+//console.log(day)
+//console.log(hour)
+//console.log(minute)
+
+if(floor == 0)
+{
 d3.csv("data.csv"
 , function (d) {  //d contains datum of current row
     //console.log(d)
     if(d.Level == 0 && d.month==month
     && d.day == day && d.hour == hour && d.quarter==minute)
     {
-        console.log(d)
+        //console.log(d)
         return  d ;
     }
 }).then(function(blockdata){
+
 var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
 var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
 var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
@@ -159,14 +267,18 @@ var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
 var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
 var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
 console.log(minCount,maxCount,minX,maxX,minY,maxY)
+
 // Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
+
 // Use scaleLinear to produce different color code
 var res = d3.scaleLinear()
   .domain([-20,120])
   .range(['#EFECEC','#CE0000']);
+
 var svg = d3.select("#heat")
     //console.log(blockdata)
 
+    
 // Draw the blocks on the floorplan
     svg.append("g")
         .attr("class","blocks")
@@ -194,8 +306,147 @@ var svg = d3.select("#heat")
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.count);
         })
+
 })
+
 }
+else if(floor == 1)
+{
+
+
+
+d3.csv("data.csv"
+, function (d) {  //d contains datum of current row
+    //console.log(d)
+    if(d.Level == 1 && d.month==month
+    && d.day == day && d.hour == hour && d.quarter==minute)
+    {
+        //console.log(d)
+        return  d ;
+    }
+}).then(function(blockdata){
+
+var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
+var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
+var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
+var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
+var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
+var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
+console.log(minCount,maxCount,minX,maxX,minY,maxY)
+
+// Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
+
+// Use scaleLinear to produce different color code
+var res = d3.scaleLinear()
+  .domain([-20,120])
+  .range(['#EFECEC','#CE0000']);
+
+var svg = d3.select("#heat")
+    //console.log(blockdata)
+
+    
+// Draw the blocks on the floorplan
+    svg.append("g")
+        .attr("class","blocks")
+        .selectAll("rect")
+        .data(blockdata)
+        .enter()
+        .append("rect")
+        .attr("width","24")
+        .attr("height","7")
+        .attr("x",function(d)
+        {   //console.log(d)
+            //console.log(d.latBlock)
+           // console.log(laProjection(d.geometry.coordinates))
+            //return 190+1390-skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+            return scale1(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+        })
+        .attr("y",function(d)
+        {
+           // console.log(laProjection(d.geometry.coordinates))
+           //return (skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1]);
+           return (195+570-scale1(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1]);
+        })
+        .attr("fill",function(d)
+        {
+           // console.log(laProjection(d.geometry.coordinates))
+           return res(d.count);
+        })
+
+})
+
+}
+else if(floor ==5)
+{
+    d3.csv("data.csv"
+, function (d) {  //d contains datum of current row
+    //console.log(d)
+    if(d.Level == 5 && d.month==month
+    && d.day == day && d.hour == hour && d.quarter==minute)
+    {
+        //console.log(d)
+        return  d ;
+    }
+}).then(function(blockdata){
+
+var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
+var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
+var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
+var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
+var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
+var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
+console.log(minCount,maxCount,minX,maxX,minY,maxY)
+
+// Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
+
+// Use scaleLinear to produce different color code
+var res = d3.scaleLinear()
+  .domain([-20,120])
+  .range(['#EFECEC','#CE0000']);
+
+var svg = d3.select("#heat")
+    //console.log(blockdata)
+
+    
+// Draw the blocks on the floorplan
+    svg.append("g")
+        .attr("class","blocks")
+        .selectAll("rect")
+        .data(blockdata)
+        .enter()
+        .append("rect")
+        .attr("width","24")
+        .attr("height","7")
+        .attr("x",function(d)
+        {   //console.log(d)
+            //console.log(d.latBlock)
+           // console.log(laProjection(d.geometry.coordinates))
+            //return 190+1390-skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+            return scale5(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[0];
+        })
+        .attr("y",function(d)
+        {
+           // console.log(laProjection(d.geometry.coordinates))
+           //return (skyscale(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1]);
+           return (200+570-scale5(d.lngBlock,d.latBlock,minX,maxX,minY,maxY)[1]);
+        })
+        .attr("fill",function(d)
+        {
+           // console.log(laProjection(d.geometry.coordinates))
+           return res(d.count);
+        })
+
+})
+
+}
+
+
+
+
+
+
+}
+
 var svg = d3.select("#heat"),
   width = +svg.attr("width"),
   height = +svg.attr("height");
@@ -204,12 +455,12 @@ function skyscale(x, y) {
     if(y>50){console.log("!!!!!!!!")}
     var scalex = d3.scaleLinear();
 		scalex.domain([0,50])
-		     .range([190,1390]);
+		     .range([190,1390]);				 
     var newx = scalex(x);
-
+    
     var scaley = d3.scaleLinear();
 		scaley.domain([0,50])
-		     .range([200,590]);
+		     .range([200,590]);				 
     var newy = scaley(y);
     //console.log(x)
     return [newx, newy];
@@ -225,6 +476,9 @@ function color(count){
     return res(count);
 }
 */
+
+
+
   /*
   svg.append("rect")
         .attr("width","10")
@@ -233,6 +487,7 @@ function color(count){
         .attr("y","590")
         .attr("fill","red")
     */
+
 // Load data from data.csv to d3, implementing data join to draw the heatmap
 d3.csv("data.csv"
 , function (d) {  //d contains datum of current row
@@ -242,6 +497,7 @@ d3.csv("data.csv"
         return  d ;
     }
 }).then(function(blockdata){
+
 var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
 var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
 var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
@@ -249,13 +505,18 @@ var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
 var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
 var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
 console.log(minCount,maxCount,minX,maxX,minY,maxY)
+
 // Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
+
 // Use scaleLinear to produce different color code
 var res = d3.scaleLinear()
   .domain([minCount,120])
   .range(['#EFECEC','#CE0000']);
+
+
     //console.log(blockdata)
 
+    
 // Draw the blocks on the floorplan
     svg.append("g")
         .attr("class","blocks")
@@ -283,9 +544,12 @@ var res = d3.scaleLinear()
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.count);
         })
+
 })
+ 
+ 
 
-
+ 
 
 // Here is the logic of time-picker
 $('.form_datetime').datetimepicker({
@@ -319,6 +583,7 @@ $('.form_datetime').datetimepicker({
 		maxView: 1,
 		forceParse: 0
     });
+
 var heatmapInstance = h337.create({
     container: document.querySelector('#heatmap'),
 });
@@ -341,10 +606,16 @@ var data2 = {
     max: max,
     data: points
 };
+
 heatmapInstance.setData(data2); //数据绑定还可以使用
+
+
+
+
 </script>
 
 </body>
 
 
 </html>
+
