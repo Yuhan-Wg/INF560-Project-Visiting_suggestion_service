@@ -30,10 +30,10 @@ def matrixTrans(df, level, between=7):
     labels = np.zeros((num,lngMax,latMax))
 
     g = generator()
+    index = 0
     for hour,minute in g:
         temp = tf.loc[(tf.hour==hour)&(tf.minute==minute)]
-        for i in range(between, len(orders)):
-            index = 0
+        for i in range(between, len(orders)):    
             next = temp.loc[tf.order==orders[i]]
             for _,row in next.iterrows():
                 labels[index, row['lngBlock'],row['latBlock']] = row['count']
@@ -42,8 +42,10 @@ def matrixTrans(df, level, between=7):
                 for _, row in prev.iterrows():
                     features[index, row['lngBlock'],row['latBlock'],b] = row['count']
             index += 1
+            if index==num:
+                return features, labels
 
-    del tf["order"]
+    del tf
     features = features[:index,:,:,:]
     labels = labels[:index,:,:]
     return features, labels
