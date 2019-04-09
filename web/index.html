@@ -93,8 +93,6 @@
 <div id="heatmap"></div>
 
 <script type="text/javascript">
-
-
 function skyscale(x, y,minX,maxX,minY,maxY) {
     if(y>39){console.log("!!!!!!!!")}
     var scalex = d3.scaleLinear();
@@ -109,22 +107,16 @@ function skyscale(x, y,minX,maxX,minY,maxY) {
     //console.log(x, y,minX,maxX,minY,maxY)
     return [newx, newy];
 }
-
-
-
 function fun(){
-
 d3.selectAll("g").remove()
 var x = document.getElementById("dtp_input2").value
 var y = document.getElementById("dtp_input3").value
 console.log(x)
-
 var month = x.split("-")[1]
 if(month[0] == "0")
 {
     month = month[1]
 }
-
 var day = x.split("-")[2]
 var hour = y.split(":")[0]
 var minute = 0
@@ -144,15 +136,12 @@ else if( y.split(":")[1] == "45" || y.split(":")[1] == "50"|| y.split(":")[1] ==
 {
     minute = 3
 }
-
 var file = x+".csv"
 console.log(file)
-
 console.log(month)
 console.log(day)
 console.log(hour)
 console.log(minute)
-
 d3.csv("data.csv"
 , function (d) {  //d contains datum of current row
     //console.log(d)
@@ -163,7 +152,6 @@ d3.csv("data.csv"
         return  d ;
     }
 }).then(function(blockdata){
-
 var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
 var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
 var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
@@ -171,17 +159,13 @@ var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
 var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
 var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
 console.log(minCount,maxCount,minX,maxX,minY,maxY)
-
 // Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
-
 // Use scaleLinear to produce different color code
 var res = d3.scaleLinear()
   .domain([-20,120])
   .range(['#EFECEC','#CE0000']);
-
 var svg = d3.select("#heat")
     //console.log(blockdata)
-
 
 // Draw the blocks on the floorplan
     svg.append("g")
@@ -210,18 +194,8 @@ var svg = d3.select("#heat")
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.count);
         })
-
 })
-
-
-
-
-
-
-
-
 }
-
 var svg = d3.select("#heat"),
   width = +svg.attr("width"),
   height = +svg.attr("height");
@@ -251,9 +225,6 @@ function color(count){
     return res(count);
 }
 */
-
-
-
   /*
   svg.append("rect")
         .attr("width","10")
@@ -262,7 +233,6 @@ function color(count){
         .attr("y","590")
         .attr("fill","red")
     */
-
 // Load data from data.csv to d3, implementing data join to draw the heatmap
 d3.csv("data.csv"
 , function (d) {  //d contains datum of current row
@@ -272,7 +242,6 @@ d3.csv("data.csv"
         return  d ;
     }
 }).then(function(blockdata){
-
 var minCount= d3.min(blockdata, function (d) { return parseInt(d.count); });
 var maxCount = d3.max(blockdata, function (d) { return parseInt(d.count); });
 var minX= d3.min(blockdata, function (d) { return parseInt(d.latBlock); });
@@ -280,17 +249,12 @@ var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
 var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
 var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
 console.log(minCount,maxCount,minX,maxX,minY,maxY)
-
 // Function skyscale() scales the coordinate of the blocks to fit the background floorplan image
-
 // Use scaleLinear to produce different color code
 var res = d3.scaleLinear()
   .domain([minCount,120])
   .range(['#EFECEC','#CE0000']);
-
-
     //console.log(blockdata)
-
 
 // Draw the blocks on the floorplan
     svg.append("g")
@@ -319,10 +283,7 @@ var res = d3.scaleLinear()
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.count);
         })
-
 })
-
-
 
 
 
@@ -358,7 +319,6 @@ $('.form_datetime').datetimepicker({
 		maxView: 1,
 		forceParse: 0
     });
-
 var heatmapInstance = h337.create({
     container: document.querySelector('#heatmap'),
 });
@@ -381,12 +341,7 @@ var data2 = {
     max: max,
     data: points
 };
-
 heatmapInstance.setData(data2); //数据绑定还可以使用
-
-
-
-
 </script>
 
 </body>
