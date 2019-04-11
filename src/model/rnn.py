@@ -5,7 +5,6 @@ import tensorflow as tf
 
 
 
->>>>>>> 8c26027616b4deae15db3cd053ee1ef7bef901c3
 def rnn_perpare(data):
     #normalized data
     normalized_data = (data - np.mean(data)) / np.std(data)
