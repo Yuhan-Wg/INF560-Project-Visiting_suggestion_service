@@ -16,7 +16,7 @@ Total process costs 20mins on my PC.
 """
 
 
-def mapFloor5(df,blockNum={'lng':15,'lat':15}):
+def mapFloor5(df,blockNum={'lng':30,'lat':10}):
     mask=(df.Level==5)
     if mask.sum()==0: return df
     #df.loc[mask,'lngBlock']=np.round(df.loc[mask].lng,6).map(MAPPER).astype('int8')
@@ -35,7 +35,7 @@ def mapFloor5(df,blockNum={'lng':15,'lat':15}):
         df.loc[mask,f+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
     return df
 
-def mapFloor1(df,blockNum={'lng':50,'lat':50}):
+def mapFloor1(df,blockNum={'lng':60,'lat':20}):
     mask=(df.Level==1)
     if mask.sum()==0: return df
     lngRange = 0.0013678100000049653 #df.loc[mask].lng.max()-df.loc[mask].lng.min()
@@ -65,7 +65,7 @@ def mapFloor1(df,blockNum={'lng':50,'lat':50}):
         df.loc[mask,f+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
     return df
 
-def mapFloorB1(df,blockNum={'lng':50,'lat':50}):
+def mapFloorB1(df,blockNum={'lng':60,'lat':20}):
     mask=(df.Level==0)
     if mask.sum()==0: return df
     lngRange = 0.0007586800000041194 #df.loc[mask].lng.max()-df.loc[mask].lng.min()
@@ -95,7 +95,7 @@ def mapFloorB1(df,blockNum={'lng':50,'lat':50}):
         df.loc[mask,f+'Block'] = ((df.loc[mask,f]-fMin)/(fMax-fMin) * blockNum[f]).astype('int8')
     return df
 
-def mapFloorAll(df,blockNum={'lng':50,'lat':50}):
+def mapFloorAll(df,blockNum={'lng':30,'lat':10}):
     MinMaxMapper={
     'lat':[1.28961633,1.29113894],
     'lng':[103.850815,103.85218281],
