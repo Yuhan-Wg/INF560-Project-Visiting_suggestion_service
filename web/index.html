@@ -595,22 +595,90 @@ var maxX= d3.max(blockdata, function (d) { return parseInt(d.latBlock); });
 var minY= d3.min(blockdata, function (d) { return parseInt(d.lngBlock); });
 var maxY= d3.max(blockdata, function (d) { return parseInt(d.lngBlock); });
 
-var best38 = d3.min(blockdata, function (d) { 
-    if(d.latBlock == 8 && d.lngBlock == 3 ){
+var best38one = d3.min(blockdata, function (d) { 
+    if(d.latBlock == 8 && d.lngBlock == 3 && d.hour>=9 && d.hour<=18){
     return parseInt(d.ClientMacAddr); 
     }
 });
-var targettime38 = 0
+var best38two = d3.min(blockdata, function (d) { 
+    if(d.latBlock == 8 && d.lngBlock == 3 && d.hour>=9 && d.hour<=18 && d.ClientMacAddr!=best38one){
+    return parseInt(d.ClientMacAddr); 
+    }
+});
+var best38three = d3.min(blockdata, function (d) { 
+    if(d.latBlock == 8 && d.lngBlock == 3 && d.hour>=9 && d.hour<=18 && d.ClientMacAddr!=best38one && d.ClientMacAddr!=best38two){
+
+    return parseInt(d.ClientMacAddr); 
+    }
+});
+
+var targettime38one = 0
+var targettime38two = 0
+var targettime38three = 0
+
 for(i=0;i<blockdata.length;i++)
 {   
     //console.log("2222222")
-    if(blockdata[i].ClientMacAddr==best38)
+    if(blockdata[i].ClientMacAddr==best38one && blockdata[i].hour>=9 && blockdata[i].hour<=18 )
     {
         //console.log("3333333333")
-        targettime38 = blockdata[i].hour
+        targettime38one = blockdata[i].hour
     }
+    if(blockdata[i].ClientMacAddr==best38two && blockdata[i].hour>=9 && blockdata[i].hour<=18)
+    {
+        //console.log("3333333333")
+        targettime38two = blockdata[i].hour
+    }
+    if(blockdata[i].ClientMacAddr==best38three && blockdata[i].hour>=9 && blockdata[i].hour<=18)
+    {
+        //console.log("3333333333")
+        targettime38three = blockdata[i].hour
+    }
+
 }
-//console.log(blockdata)
+
+
+var best1713one = d3.min(blockdata, function (d) { 
+    if(d.latBlock == 13 && d.lngBlock == 17 && d.hour>=9 && d.hour<=18){
+    return parseInt(d.ClientMacAddr); 
+    }
+});
+var best1713two = d3.min(blockdata, function (d) { 
+    if(d.latBlock == 13 && d.lngBlock == 17 && d.hour>=9 && d.hour<=18 && d.ClientMacAddr!=best1713one){
+    return parseInt(d.ClientMacAddr); 
+    }
+});
+var best1713three = d3.min(blockdata, function (d) { 
+    if(d.latBlock == 13 && d.lngBlock == 17 && d.hour>=9 && d.hour<=18 && d.ClientMacAddr!=best1713one && d.ClientMacAddr!=best1713two){
+
+    return parseInt(d.ClientMacAddr); 
+    }
+});
+
+var targettime1713one = 0
+var targettime1713two = 0
+var targettime1713three = 0
+
+for(i=0;i<blockdata.length;i++)
+{   
+    //console.log("2222222")
+    if(blockdata[i].ClientMacAddr==best1713one && blockdata[i].hour>=9 && blockdata[i].hour<=18 )
+    {
+        //console.log("3333333333")
+        targettime1713one = blockdata[i].hour
+    }
+    if(blockdata[i].ClientMacAddr==best1713two && blockdata[i].hour>=9 && blockdata[i].hour<=18)
+    {
+        //console.log("3333333333")
+        targettime1713two = blockdata[i].hour
+    }
+    if(blockdata[i].ClientMacAddr==best1713three && blockdata[i].hour>=9 && blockdata[i].hour<=18)
+    {
+        //console.log("3333333333")
+        targettime1713three = blockdata[i].hour
+    }
+
+}
 
 // rect for (3,8)
     svg.append("g")
@@ -637,25 +705,53 @@ for(i=0;i<blockdata.length;i++)
                     .attr("stroke-width","20")
                     .attr("stroke-opacity","0.9")
                     //.text(d.value)
+
+//----------------------copy here!!!--------------------
                  svg.append("rect")
                     .attr("x",920)
                     .attr("y",110)
                     .attr("height","200")
-                    .attr("width","350")
-                    .attr("opacity",0.3)
-                    .attr("fill","black")
+                    .attr("width","330")
+                    .attr("opacity",0.7)
+                    .attr("fill","white")
+                    .attr("stroke","black")
+                    .attr("stroke-width","3")
                     .attr("rx",20)
                     .attr("ry",20)
                     .attr("id","information")
 
                 svg.append("text")
-                    .attr("x",920)
-                    .attr("y",110)
-                    .text(targettime38)
+                    .attr("x",950)
+                    .attr("y",150)
+                    .attr("fill","black")
+                    .attr("font-size","35px")
+                    .text("Best Visiting Time")
+
+                svg.append("text")
+                    .attr("x",960)
+                    .attr("y",200)
+                    .attr("fill","black")
+                    .attr("font-size","30px")
+                    .text(targettime38one+":00")
+
+                svg.append("text")
+                    .attr("x",960)
+                    .attr("y",240)
+                    .attr("fill","black")
+                    .attr("font-size","30px")
+                    .text(targettime38two+":00")
+
+                svg.append("text")
+                    .attr("x",960)
+                    .attr("y",280)
+                    .attr("fill","black")
+                    .attr("font-size","30px")
+                    .text(targettime38three+":00")
 
               })
         .on("mouseout", function(d) {
                 svg.select("#information").remove()
+                svg.selectAll("text").remove()
                 d3.select(this)
                 .attr("x","300")
                 .attr("y",200+590-356-42+20)
@@ -668,6 +764,8 @@ for(i=0;i<blockdata.length;i++)
                 .attr("stroke-opacity","0.7")
 
             })
+//-------------------------------------------
+
 
 // rect for (17,13)
     svg.append("g")
@@ -693,10 +791,52 @@ for(i=0;i<blockdata.length;i++)
                     .attr("opacity","0.5")
                     .attr("stroke-width","20")
                     .attr("stroke-opacity","0.9")
+                svg.append("rect")
+                    .attr("x",920)
+                    .attr("y",110)
+                    .attr("height","200")
+                    .attr("width","330")
+                    .attr("opacity",0.7)
+                    .attr("fill","white")
+                    .attr("stroke","black")
+                    .attr("stroke-width","3")
+                    .attr("rx",20)
+                    .attr("ry",20)
+                    .attr("id","information")
+
+                svg.append("text")
+                    .attr("x",950)
+                    .attr("y",150)
+                    .attr("fill","black")
+                    .attr("font-size","35px")
+                    .text("Best Visiting Time")
+
+                svg.append("text")
+                    .attr("x",960)
+                    .attr("y",200)
+                    .attr("fill","black")
+                    .attr("font-size","30px")
+                    .text(targettime1713one+":00")
+
+                svg.append("text")
+                    .attr("x",960)
+                    .attr("y",240)
+                    .attr("fill","black")
+                    .attr("font-size","30px")
+                    .text(targettime1713two+":00")
+
+                svg.append("text")
+                    .attr("x",960)
+                    .attr("y",280)
+                    .attr("fill","black")
+                    .attr("font-size","30px")
+                    .text(targettime1713three+":00")
                     //.text(d.value)
 
               })
         .on("mouseout", function(d) {
+            svg.select("#information").remove()
+                svg.selectAll("text").remove()
                 d3.select(this)
                 .attr("x","408")
                 .attr("y",200+590-356-42+23-70)
@@ -708,6 +848,7 @@ for(i=0;i<blockdata.length;i++)
                 .attr("stroke-width","15")
                 .attr("stroke-opacity","0.7")
             })
+
 
 // rect for (25,10)
     svg.append("g")
@@ -737,6 +878,8 @@ for(i=0;i<blockdata.length;i++)
 
               })
         .on("mouseout", function(d) {
+            svg.select("#information").remove()
+                svg.selectAll("text").remove()
                 d3.select(this)
                 .attr("x","665")
                 .attr("y",200+590-356-42+23-70+200-20-30+10)
@@ -779,6 +922,8 @@ for(i=0;i<blockdata.length;i++)
 
               })
         .on("mouseout", function(d) {
+            svg.select("#information").remove()
+                svg.selectAll("text").remove()
                 d3.select(this)
                 .attr("x","720")
                 .attr("y",365)
@@ -820,6 +965,8 @@ svg.append("g")
 
               })
         .on("mouseout", function(d) {
+            svg.select("#information").remove()
+                svg.selectAll("text").remove()
                 d3.select(this)
                 .attr("x","1090")
                 .attr("y",470)
@@ -861,6 +1008,8 @@ svg.append("g")
 
               })
         .on("mouseout", function(d) {
+            svg.select("#information").remove()
+                svg.selectAll("text").remove()
                 d3.select(this)
                 .attr("x","1280")
                 .attr("y",435)
