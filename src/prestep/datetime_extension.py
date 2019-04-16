@@ -26,8 +26,8 @@ def timedate_process(df):
     weatherData['localtime'] = pd.to_datetime(weatherData[['Year', 'Month', 'Day']])
     df['year'] = 2018
     df['localtime'] = pd.to_datetime(df[['year', 'month', 'day']])
-    df['minute'] = df['quarter'] * 15
-    del df['quarter']
+    #df['minute'] = df['quarter'] * 15
+    #del df['quarter']
     weatherData.drop(['Year', 'Month', 'Day'], axis=1, inplace=True)
 
 
