@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
-                <div class="input-group date form_datetime col-md-5" data-date="2018-04-25T09:30:00Z" data-date-format="dd MM yyyy ----- HH:ii p" data-link-field="dtp_input1">
+                <div class="input-group date form_datetime col-md-5" data-date="2019-04-01T09:00:00Z" data-date-format="dd MM yyyy - HH:00" data-link-field="dtp_input1">
                     <input class="form-control" size="18" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -81,7 +81,7 @@
                 
             </label>
             <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="time" checked> Best Visiting Time
+                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="time"> Best Visiting Time
             </label> 
 
             <br>
@@ -230,6 +230,11 @@ function floor5(){
 
 function fun(){
 
+var dt = document.getElementById("dtp_input1").value
+if (!dt)
+{
+    alert("Please choose a date first");
+}
 //alert($("input[name='inlineRadioOptions']:checked").val());
 
 var flag = $("input[name='inlineRadioOptions']:checked").val();
@@ -254,7 +259,7 @@ d3.selectAll("g").remove()
 
 if(flag == "heatmap")
 {
-var dt = document.getElementById("dtp_input1").value
+//var dt = document.getElementById("dtp_input1").value
 //console.log(z)
 
 //Get Date and Time for timepicker
@@ -284,7 +289,7 @@ var file = "data/"+month+"/"+day+"/"
 }
 else if(flag == "time")
 {
-var dt = document.getElementById("dtp_input1").value
+//var dt = document.getElementById("dtp_input1").value
 //console.log(z)
 
 //Get Date and Time for timepicker
@@ -378,21 +383,21 @@ var svg = d3.select("#heat")
         .data(blockdata)
         .enter()
         .append("circle")
-        .attr("r","13")
+        .attr("r","12.5")
         //.attr("height","8")
         .attr("opacity",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            //return op(d.count);
-           return 0.75;
+           return 0.8;
         })
         .attr("stroke",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.ClientMacAddr);
         })
-        .attr("stroke-width","3")
-        .attr("stroke-opacity","0.6")
+        .attr("stroke-width","4")
+        .attr("stroke-opacity","0.7")
         //.attr("rx","15")
         //.attr("ry","8")
         .attr("cx",function(d)
@@ -459,21 +464,21 @@ var svg = d3.select("#heat")
         .data(blockdata)
         .enter()
         .append("circle")
-        .attr("r","13")
+        .attr("r",12.5)
         //.attr("height","8")
         .attr("opacity",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            //return op(d.count);
-           return 0.75;
+           return 0.8;
         })
         .attr("stroke",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.ClientMacAddr);
         })
-        .attr("stroke-width","3")
-        .attr("stroke-opacity","0.6")
+        .attr("stroke-width",4)
+        .attr("stroke-opacity",0.7)
         //.attr("rx","15")
         //.attr("ry","8")
         .attr("cx",function(d)
@@ -537,21 +542,21 @@ var svg = d3.select("#heat")
         .data(blockdata)
         .enter()
         .append("circle")
-        .attr("r","13")
+        .attr("r",12.5)
         //.attr("height","8")
         .attr("opacity",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            //return op(d.count);
-           return 0.75;
+           return 0.8;
         })
         .attr("stroke",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.ClientMacAddr);
         })
-        .attr("stroke-width","3")
-        .attr("stroke-opacity","0.6")
+        .attr("stroke-width",4)
+        .attr("stroke-opacity",0.7)
         //.attr("rx","15")
         //.attr("ry","8")
         .attr("cx",function(d)
@@ -2816,7 +2821,7 @@ var svg = d3.select("#heat"),
   height = +svg.attr("height");
 
 
-
+/*
 // Load data from data.csv to d3, implementing data join to draw the heatmap
 d3.csv("data/4/25/level0.csv"
 , function (d) {  //d contains datum of current row
@@ -2857,21 +2862,21 @@ var op = d3.scaleLinear()
         .data(blockdata)
         .enter()
         .append("circle")
-        .attr("r","13")
+        .attr("r","12.5")
         //.attr("height","8")
         .attr("opacity",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            //return op(d.count);
-           return 0.75;
+           return 0.8;
         })
         .attr("stroke",function(d)
         {
            // console.log(laProjection(d.geometry.coordinates))
            return res(d.ClientMacAddr);
         })
-        .attr("stroke-width","3")
-        .attr("stroke-opacity","0.6")
+        .attr("stroke-width","4")
+        .attr("stroke-opacity","0.7")
         //.attr("rx","15")
         //.attr("ry","8")
         .attr("cx",function(d)
@@ -2896,21 +2901,28 @@ var op = d3.scaleLinear()
 
 })
  
- 
+*/
 
- 
 
-// Here is the logic of time-picker
 $('.form_datetime').datetimepicker({
-        language:  'us',
+        language:  'en',
         weekStart: 1,
         todayBtn:  1,
 		autoclose: 1,
 		todayHighlight: 1,
-		startView: 2,
+		startView: 3,
 		forceParse: 0,
-        showMeridian: 1
+        showMeridian: 1,
+        viewSelect: 3,
+        //set the min time period 
+        minView: 1,
+        maxView: 3,
+        //initialDate:"2019-05-28",
+        startDate:"2019-04-01",
+        endDate:"2019-07-31 23:59"
     });
+
+/*
 	$('.form_date').datetimepicker({
         language:  'us',
         weekStart: 1,
@@ -2933,7 +2945,7 @@ $('.form_datetime').datetimepicker({
 		forceParse: 0
     });
 
-
+*/
 
 
 </script>
