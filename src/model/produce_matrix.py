@@ -6,11 +6,6 @@ from copy import deepcopy
 # to features and labels for CNN training.
 
 def matrixTrans(df, level, between=7):
-    """
-    Useful columns:
-    Level	latBlock	lngBlock	count
-    month	day	hour	count	minute
-    """
     tf = deepcopy(df.loc[df['Level'] == level])
     latMax = tf.latBlock.max()+1
     lngMax = tf.lngBlock.max()+1
@@ -19,28 +14,27 @@ def matrixTrans(df, level, between=7):
 
     def generator():
         for hour in tf.hour.unique():
-            for minute in tf.minute.unique():
-                yield hour,minute
+            yield hour
 
     g = generator()
     num = 0
-    for h,m in g:
+    for h in g:
         num+= len(orders)-between
     features = np.zeros((num,lngMax,latMax,between))
     labels = np.zeros((num,lngMax,latMax))
 
     g = generator()
     index = 0
-    for hour,minute in g:
-        temp = tf.loc[(tf.hour==hour)&(tf.minute==minute)]
-        for i in range(between, len(orders)):    
-            next = temp.loc[tf.order==orders[i]]
-            for _,row in next.iterrows():
-                labels[index, row['lngBlock'],row['latBlock']] = row['count']
+    for hour in g:
+        temp = tf.loc[(tf.hour==hour)]
+        for i in range(between, len(orders)):
+            next_ = temp.loc[tf.order==orders[i]]
+            for _,row in next_.iterrows():
+                labels[index, row['lngBlock'],row['latBlock']] = row['ClientMacAddr']
             for b in range(between):
                 prev = temp.loc[tf.order==orders[i-1-b]]
                 for _, row in prev.iterrows():
-                    features[index, row['lngBlock'],row['latBlock'],b] = row['count']
+                    features[index, row['lngBlock'],row['latBlock'],b] = row['ClientMacAddr']
             index += 1
             if index==num:
                 return features, labels
