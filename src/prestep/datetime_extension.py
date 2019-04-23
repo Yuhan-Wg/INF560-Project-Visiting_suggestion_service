@@ -55,7 +55,7 @@ def timedate_process(df):
     for i in [129, 176, 206, 220]:
          df["eventinPSCS"] |= (df['localtime'].dt.dayofyear ==i)
 
-    del df['localtime']
+    del df['localtime'],df["year"]
     #df["localtime"] = pd.to_datetime(df[['year', 'month', 'day','hour','minute']])
     #df.drop(['year', 'month', 'day','hour','quarter'], inplace= True,axis=1)
     return df
