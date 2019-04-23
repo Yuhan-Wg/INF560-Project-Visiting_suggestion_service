@@ -2,6 +2,7 @@
 input/*.csv
 src/*.csv
 *.csv
+web/data
 !debugger.csv
 !input/debugger_origin.csv
 !input/weather/*.csv
