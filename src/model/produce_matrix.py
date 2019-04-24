@@ -6,6 +6,7 @@ from copy import deepcopy
 # to features and labels for CNN training.
 
 def matrixTrans(df, level, between=7):
+    cols = [c for c in df.columns if c not in ["Level","latBlock","lngBlock","month","day","hour","ClientMacAddr"]]
     tf = deepcopy(df.loc[df['Level'] == level])
     latMax = tf.latBlock.max()+1
     lngMax = tf.lngBlock.max()+1
@@ -21,6 +22,7 @@ def matrixTrans(df, level, between=7):
     for h in g:
         num+= len(orders)-between
     features = np.zeros((num,lngMax,latMax,between))
+    features_add = np.zeros((num,len(cols)))
     labels = np.zeros((num,lngMax,latMax))
 
     g = generator()
@@ -29,6 +31,9 @@ def matrixTrans(df, level, between=7):
         temp = tf.loc[(tf.hour==hour)]
         for i in range(between, len(orders)):
             next_ = temp.loc[tf.order==orders[i]]
+            if len(next_)==0:
+                continue
+            features_add[index,:] = next_.iloc[0][cols]
             for _,row in next_.iterrows():
                 labels[index, row['lngBlock'],row['latBlock']] = row['ClientMacAddr']
             for b in range(between):
@@ -37,9 +42,10 @@ def matrixTrans(df, level, between=7):
                     features[index, row['lngBlock'],row['latBlock'],b] = row['ClientMacAddr']
             index += 1
             if index==num:
-                return features, labels
+                return features,features_add, labels
 
     del tf
     features = features[:index,:,:,:]
+    features_add = features_add[:index,:]
     labels = labels[:index,:,:]
-    return features, labels
+    return features, features_add, labels
