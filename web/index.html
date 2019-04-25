@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">What time is your visiting?</label>
                 <!-- <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label> -->
-                <div class="input-group date form_datetime col-md-5" data-date="2019-04-01T09:00:00Z" data-date-format="dd MM yyyy - HH:00" data-link-field="dtp_input1">
+                <div class="input-group date form_datetime col-md-5" data-date="2019-04-01T09:00:00Z" data-date-format="dd MM - HH:00" data-link-field="dtp_input1">
                     <input class="form-control" size="18" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -294,6 +294,7 @@ if(hour[0] == "0")
 }
 
 var file = "data/"+month+"/"+day+"/"
+
 }
 else if(flag == "time")
 {
@@ -2978,9 +2979,9 @@ var op = d3.scaleLinear()
 $('.form_datetime').datetimepicker({
         language:  'en',
         weekStart: 1,
-        todayBtn:  1,
+        todayBtn:  0,
 		autoclose: 1,
-		todayHighlight: 1,
+		todayHighlight: 0,
 		startView: 3,
 		forceParse: 0,
         showMeridian: 1,
@@ -2989,8 +2990,8 @@ $('.form_datetime').datetimepicker({
         minView: 1,
         maxView: 3,
         //initialDate:"2019-05-28",
-        startDate:"2019-04-01",
-        endDate:"2019-08-01 23:59"
+        startDate:"2018-04-01",
+        endDate:"2018-08-01 23:59"
     });
 
 /*
