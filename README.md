@@ -25,7 +25,7 @@ INF-560 (Data Informatics Professional Practicum) Project sponsored by Kiana Ana
 # Run Demo
 ## Step 1
 Use command below to setup environment:
-$npm install -g browser-sync
+#### $npm install -g browser-sync
 ## Step 2
 Enter the dictionary "web"(Kiana->web)
 ## Step 3
