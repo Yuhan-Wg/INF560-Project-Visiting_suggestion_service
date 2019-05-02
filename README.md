@@ -30,4 +30,4 @@ Use command below to setup environment:
 Enter the dictionary "web"(Kiana->web)
 ## Step 3
 Use command below to run the demo on your web browsers:
-$browser-sync start -s -f "*.html,*.css,*.js" -i index.html
+#### $browser-sync start -s -f "*.html,*.css,*.js" -i index.html
