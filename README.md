@@ -21,3 +21,13 @@ A quick overview of preprocessing program is in *[Quick_Overview.ipynb](./Quick_
 
 # Support
 INF-560 (Data Informatics Professional Practicum) Project sponsored by Kiana Analytics, Inc.
+
+# Run Demo
+## Step 1
+Use command below to setup environment:
+$npm install -g browser-sync
+## Step 2
+Enter the dictionary "web"(Kiana->web)
+## Step 3
+Use command below to run the demo on your web browsers:
+$browser-sync start -s -f "*.html,*.css,*.js" -i index.html
