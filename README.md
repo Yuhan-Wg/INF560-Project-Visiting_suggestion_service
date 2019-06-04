@@ -1,9 +1,9 @@
 ## Dependencies
 Python Packages: *Tensorflow*, *Numpy*, *Pandas*
- 
+
 Web tech: *D3.js*, *bootstrap*
 
-## Report: 
+## Report:
 See [Final Report](docs/report/FinalReport_Fordifficulty.pdf),
 [Final Slides](docs/report/ForDifficulty-FinalPresentation.pdf)
 
@@ -18,7 +18,6 @@ See [Final Report](docs/report/FinalReport_Fordifficulty.pdf),
 
 
 ## Code
-Data are provided by Kiana Inc. and are not open.
 
 **Preprocessing Scripts:** [src/prestep](src/prestep)
 
@@ -26,9 +25,17 @@ Data are provided by Kiana Inc. and are not open.
 
 **Web Application:** [web](web)
 
-*Enter the "web" path, run the command to start web app:*
+#### Run Demo on web browsers
+Use command below to setup environment:
+
+`npm install -g browser-sync`
+
+Enter the "web" path, run the command to start web app:
 
 `browser-sync start -s -f "*.html,*.css,*.js"-i index.html`
+
+## Data
+Data are provided by Kiana Inc. and are not open.
 
 **Debugger Dataset:**
 
