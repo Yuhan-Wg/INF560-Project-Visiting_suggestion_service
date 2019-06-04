@@ -1,9 +1,34 @@
-# Preprocess
-Download data provided by Kiana.
+## Dependencies
+Python Packages: *Tensorflow*, *Numpy*, *Pandas*
+ 
+Web tech: *D3.js*, *bootstrap*
 
-**Run Scripts:**
-* python one_step.py <Memory_Usage(in GB)> <Input_file> <Output_File1>
-* python assign_block.py <Output_file1> <Output_File2>
+## Report: 
+See [Final Report](docs/report/FinalReport_Fordifficulty.pdf),
+[Final Slides](docs/report/ForDifficulty-FinalPresentation.pdf)
+
+## Demo
+**Visitor Distribution Prediction**
+
+![](img/Demo1.png)
+
+**Best Visit Time Suggestion**
+
+![](img/Demo2.png)
+
+
+## Code
+Data are provided by Kiana Inc. and are not open.
+
+**Preprocessing Scripts:** [src/prestep](src/prestep)
+
+**Model Scripts:** [src/model](src/model)
+
+**Web Application:** [web](web)
+
+*Enter the "web" path, run the command to start web app:*
+
+`browser-sync start -s -f "*.html,*.css,*.js"-i index.html`
 
 **Debugger Dataset:**
 
@@ -19,5 +44,9 @@ Download data provided by Kiana.
 
 A quick overview of preprocessing program is in *[Quick_Overview.ipynb](./Quick_Overview.ipynb)* which runs on debugger dataset.
 
-# Support
+## Support
 INF-560 (Data Informatics Professional Practicum) Project sponsored by Kiana Analytics, Inc.
+
+Team members: Yuhan Wang, Tianyang Li, Rui Lin, Jing Zhang
+
+Contact: yuhanwg1996@gmail.com
