@@ -1,3 +1,6 @@
+## Project Objective
+Predict visitor distribution in the gallery with the past data in the National Singapore Gallery provided by Kiana Inc. Then build an web application to provide visitors with the reasonable visiting time.
+
 ## Dependencies
 Python Packages: *Tensorflow*, *Numpy*, *Pandas*
 
